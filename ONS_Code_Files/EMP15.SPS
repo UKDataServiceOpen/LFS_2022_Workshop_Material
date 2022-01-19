@@ -1,0 +1,76 @@
+/keep PWT18 age sex inecac05 ftpt ed4wk.
+
+weight by PWT18.
+
+USE ALL.
+COMPUTE filter_$=(PWT18>0).
+VARIABLE LABEL filter_$ 'PWT18>0 (FILTER)'.
+VALUE LABELS filter_$  0 'Not Selected' 1 'Selected'.
+FORMAT filter_$ (f1.0).
+FILTER BY filter_$.
+EXECUTE .
+
+DO IF (sex = 1) .
+RECODE
+  age
+  (16 thru 64=1) INTO  WRKAGE.
+END IF .
+EXECUTE .
+
+DO IF (sex = 2) .
+RECODE
+  age
+  (16 thru 64=2) INTO  WRKAGE.
+END IF .
+EXECUTE .
+
+Value labels  WRKAGE
+1 'Male 16-64'
+2 'Female 16-64'.
+
+
+select if WRKAGE=1 or WRKAGE=2.
+select if inecac05=1.
+recode age (16 thru 17=1) (18 thru 24=2) (25 thru 34=3) (35 thru 49=4) (50 thru 59=5) (60 thru 64=6) Into ageBANDS.
+value labels ageBANDS
+1 '16-17'
+2 '18-24'
+3 '25-34'
+4 '35-49'
+5 '50-59'
+6 '60-64'.
+
+recode Ed4wk (1=1) Into Ed4wkYES.
+value labels Ed4wkYES 
+1 'Yes'.
+
+recode Ed4wk (1,2,-8,-9=1) Into Ed4wkTOTAL.
+value labels Ed4wkTOTAL 
+1 'Total'.
+
+
+* Custom Tables.
+CTABLES
+  /VLABELS VARIABLES=ageBANDS sex Ed4wkYES Ed4wkTOTAL DISPLAY=DEFAULT
+  /TABLE sex > Ed4wkYES [C] + sex > Ed4wkTOTAL [C] BY ageBANDS [C][COUNT F40.0]
+  /CATEGORIES VARIABLES=ageBANDS ORDER=A KEY=VALUE EMPTY=INCLUDE TOTAL=YES POSITION=AFTER
+  /CATEGORIES VARIABLES=sex ORDER=A KEY=VALUE EMPTY=INCLUDE TOTAL=YES POSITION=AFTER MISSING=INCLUDE
+  /CATEGORIES VARIABLES=Ed4wkYES Ed4wkTOTAL ORDER=A KEY=VALUE EMPTY=INCLUDE.
+
+Weight Off.
+
+* Custom Tables.
+CTABLES
+  /VLABELS VARIABLES=ageBANDS sex Ed4wkYES Ed4wkTOTAL DISPLAY=DEFAULT
+  /TABLE sex > Ed4wkYES [C] + sex > Ed4wkTOTAL [C] BY ageBANDS [C][COUNT F40.0]
+  /CATEGORIES VARIABLES=ageBANDS ORDER=A KEY=VALUE EMPTY=INCLUDE TOTAL=YES POSITION=AFTER
+  /CATEGORIES VARIABLES=sex ORDER=A KEY=VALUE EMPTY=INCLUDE TOTAL=YES POSITION=AFTER MISSING=INCLUDE
+  /CATEGORIES VARIABLES=Ed4wkYES Ed4wkTOTAL ORDER=A KEY=VALUE EMPTY=INCLUDE.
+
+New file.
+
+DATASET CLOSE ALL.
+
+
+
+

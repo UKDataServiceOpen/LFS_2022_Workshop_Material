@@ -1,0 +1,33 @@
+/keep PIWT18 grsswk inecac05 ftpt hourpay sex.
+
+weight by PIWT18.
+
+USE ALL.
+COMPUTE filter_$=(PIWT18>0).
+VARIABLE LABEL filter_$ 'PIWT18>0 (FILTER)'.
+VALUE LABELS filter_$  0 'Not Selected' 1 'Selected'.
+FORMAT filter_$ (f1.0).
+FILTER BY filter_$.
+EXECUTE .
+
+select if (PIWT18>0) and (hourpay>=0 and hourpay<=100) and (inecac05=1) and (ftpt=1 or ftpt=3).
+execute.
+
+* Custom Tables.
+CTABLES
+  /VLABELS VARIABLES=grsswk sex DISPLAY=DEFAULT
+  /TABLE sex BY grsswk [MEAN, MEDIAN, PTILE 10, PTILE 25, PTILE 75, PTILE 90]
+  /CATEGORIES VARIABLES=sex ORDER=A KEY=VALUE EMPTY=INCLUDE TOTAL=YES POSITION=AFTER MISSING=EXCLUDE.
+
+Weight Off.
+
+* Custom Tables.
+CTABLES
+  /VLABELS VARIABLES=grsswk sex DISPLAY=DEFAULT
+  /TABLE sex BY grsswk [MEAN, MEDIAN, PTILE 10, PTILE 25, PTILE 75, PTILE 90]
+  /CATEGORIES VARIABLES=sex ORDER=A KEY=VALUE EMPTY=INCLUDE TOTAL=YES POSITION=AFTER MISSING=EXCLUDE.
+
+
+New file.
+
+DATASET CLOSE ALL.
