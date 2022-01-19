@@ -7,7 +7,8 @@
 *https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/datasets/grossweeklyearningsoffulltimeemployeesearn04 [last accessed 24/04/2021]
 This table is updated four times a year in February, May, August and November using the Quarterly Labour Force Survey. 
 
-*Data: Quarterly Labour Force Survey, October - December, 2020, which is accessible from the UK Data Servic (http://doi.org/10.5255/UKDA-SN-8777-3)
+*Data: Quarterly Labour Force Survey, October - December, 2020, which is accessible from the UK Data Service.
+
 
 
 FILTER OFF.
@@ -26,7 +27,7 @@ weight by PIWT20.
 *Create and apply a filter to select those with a weight greater than 0. 
 USE ALL.
 COMPUTE filter_$=(PIWT20>0).
-VARIABLE LABEL filter_$ 'PIWT20>0 (FILTER)'.
+VARIABLE LABELS filter_$ 'PIWT20>0 (FILTER)'.
 VALUE LABELS filter_$  0 'Not Selected' 1 'Selected'.
 FORMAT filter_$ (f1.0).
 FILTER BY filter_$.
@@ -62,8 +63,8 @@ FREQUENCIES SEX.
 
 ***********************************************************************************************
 *REVIEW QUESTIONS 4
-The ONS table associated with this report gives the estimated number of fulltime employees as 21,401,000. 
-*Using the frequency above, we get 213, 15181. Why is there a difference? What steps above need to be different to get the 
+The ONS table associated with this report gives the estimated number of fulltime employees as 21,215, 000. 
+*Using the frequency above, we get 213,138,049. Why is there a difference? What steps above need to be different to get the 
 correct estimate of the number of fulltime employees?
 ***********************************************************************************************
 

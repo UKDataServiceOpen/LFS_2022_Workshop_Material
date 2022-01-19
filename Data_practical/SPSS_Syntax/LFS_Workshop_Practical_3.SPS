@@ -13,14 +13,10 @@ https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemplo
 *Set the directory, open the data and keep the necessary variables. 
 *cd "~\LFS workshop".
 *show DIRECTORY.
-
-
-GET FILE = "UKDA-8778-spss\spss\spss25\lgwt18_2q_js20_od20_eul.sav". 
+*GET FILE = "UKDA-8778-spss\spss\spss25\lgwt18_2q_js20_od20_eul.sav". 
 
 SAVE 
-  OUTFILE="practical3_temp"
-    /keep PWT18 PIWT18 grsswk inecac05 ftpt hourpay sex.
-/Keep ages2 age2 lgwt18 emplen1 emplen2 flow sex ilodefr1 ilodefr2 INCAC051 INCAC052 SC10MMJ1 SC10MMJ2 in792sm2 in792sm1.
+  OUTFILE="practical3_temp".
 
 *Examine the variables. 
 Frequencies ages2 age2 emplen1 emplen2 flow sex ilodefr1 ilodefr2 INCAC051 INCAC052 SC10MMJ1 SC10MMJ2 in792sm2 in792sm1.
@@ -43,7 +39,7 @@ FILTER BY filter_$.
 EXECUTE .
 
 *Weight by the longitudinal weight. 
-WEIGHT  BY lgwt18.
+WEIGHT  BY lgwt20.
 
 * Examine the variables flow.
 VARIABLE LEVEL FLOW (NOMINAL).
@@ -71,7 +67,7 @@ FILTER BY filter_$.
 EXECUTE .
 
 
-WEIGHT  BY lgwt18.
+WEIGHT  BY lgwt20.
 FREQUENCIES
   VARIABLES=flow
   /ORDER=  ANALYSIS .
@@ -96,7 +92,7 @@ FORMAT filter_$ (f1.0).
 FILTER BY filter_$.
 EXECUTE .
 
-WEIGHT  BY lgwt18.
+WEIGHT  BY lgwt20.
 
 *Create a simpliefed economic activity variable (with employee+ and one inactive group) for time point 1. 
 RECODE

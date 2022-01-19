@@ -11,7 +11,8 @@ This table is updated four times a year in February, May, August and November us
 *Data: Quarterly Labour Force Survey, October - December, 2020, accessible from the UK Data Service 
 
 
-*Open and inspect the data
+**START HERE
+*Open the data  (lfsp_od20_eul_pwt20.sav) and save a copy to work with e.g.(lfsp_od20_eul_pwt20_Practical1.sav). 
 
 ***********************************************************************************************
 *REVIEW QUESTIONS 
@@ -47,7 +48,7 @@ value labels JobTmp
 *Create and apply a filter to select those with a weight greater than 0. 
 USE ALL.
 COMPUTE filter_$=(PWT20>0).
-VARIABLE LABEL filter_$ 'PWT20>0 (FILTER)'.
+VARIABLE LABELS filter_$ 'PWT20>0 (FILTER)'.
 VALUE LABELS filter_$  0 'Not Selected' 1 'Selected'.
 FORMAT filter_$ (f1.0).
 FILTER BY filter_$.
@@ -97,7 +98,7 @@ CTABLES
   /CATEGORIES VARIABLES=sex ORDER=A KEY=VALUE EMPTY=INCLUDE TOTAL=YES POSITION=AFTER MISSING=INCLUDE.
 ***********************************************************************************************
 *REVIEW QUESTIONS  
-*How many applicable cases to we have for the above analysis?   
+*How many applicable cases do we have for the above analysis?   
 ***********************************************************************************************
 
 
