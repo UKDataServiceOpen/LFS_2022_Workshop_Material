@@ -36,7 +36,7 @@ EXECUTE .
 *Select only those in fulltime employment ****with valid income values*****
 *Replace the three asterixs (*) with relevant values to complete the syntax below. 
 
-select if (PIWT20>0) and (hourpay>=0 and hourpay<=100) and (inecac05=1) and (ftpt=1 or ftpt=3).
+select if (PIWT20>0) and (hourpay>=0 and hourpay<=100) and (inecac05=*) and (ftpt=* or ftpt=*).
 execute.
 
 
@@ -53,6 +53,46 @@ CTABLES
   /TABLE sex BY grsswk [MEAN, MEDIAN, PTILE 10, PTILE 25, PTILE 75, PTILE 90]
   /CATEGORIES VARIABLES=sex ORDER=A KEY=VALUE EMPTY=INCLUDE TOTAL=YES POSITION=AFTER MISSING=EXCLUDE.
 
+*******************************************************************************************************
+Alternative for those without CTables add on:
+***For female values:
+*create female variable
+
+RECODE SEX (2=1) (1=0) (MISSING=Copy) (ELSE=Copy) INTO Female.
+VARIABLE LABELS  Female 'Female'.
+EXECUTE.
+
+FILTER OFF.
+
+select if 
+(PIWT20>0) and (hourpay>=0 and hourpay<=100) and (inecac05=1) and (ftpt=1 or ftpt=3) and (Female=1).
+execute.
+
+FREQUENCIES VARIABLES=GRSSWK
+  /PERCENTILES=10.0 25.0 75.0 90.0 
+  /STATISTICS=MEDIAN
+  /ORDER=ANALYSIS.
+
+***For male values:
+
+*Create a variable for male
+
+RECODE SEX (1=1) (2=0) (MISSING=Copy) (ELSE=Copy) INTO Male.
+VARIABLE LABELS  Male 'Male'.
+EXECUTE.
+
+FILTER OFF.
+
+select if 
+(PIWT20>0) and (hourpay>=0 and hourpay<=100) and (inecac05=1) and (ftpt=1 or ftpt=3) and (male=1).
+execute.
+
+FREQUENCIES VARIABLES=GRSSWK
+  /PERCENTILES=10.0 25.0 75.0 90.0 
+  /STATISTICS=MEDIAN
+  /ORDER=ANALYSIS.
+
+*Consult the statistics table 
 ***********************************************************************************************
 *REVIEW QUESTIONS 3
 *what are median weekly earnings?
@@ -71,8 +111,4 @@ correct estimate of the number of fulltime employees?
 
 *WHAT NEXT?
 *see if you can examine earnings for temporary workers or another sub-group of interest
-
-
-
-
 

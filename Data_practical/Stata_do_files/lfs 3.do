@@ -10,7 +10,7 @@
 clear all
 
 *Set the directory, open the data and keep the necessary variables. 
-cd "P:Desktop\Data"
+cd "P:\desktop"
 
 
 use "UKDA-8778-stata\stata\stata13\lgwt20_2q_js20_od20_eul.dta"
@@ -37,7 +37,7 @@ tab1 AGES2 AGE2 EMPLEN1 EMPLEN2 flow SEX ILODEFR1 ILODEFR2 ///
 keep if AGE2>15 & AGE2 < 65
 
 * Examine the variables flow.
-table flow [fw=LGWT20],format (%20.0f)
+table flow [fw=LGWT20], nformat (%20.0f)
 
 ***********************************************************************************************
 *REVIEW QUESTIONS  2
@@ -77,7 +77,7 @@ recode INCAC052 ///
 label variable eco2 "eco2"
 
 * Examine change in status using a crosstabulation of economic activity at time 1 and time 2.
-table (eco1) (eco2) [fw=LGWT20],format (%20.0f)
+table (eco1) (eco2) [fw=LGWT20], nformat (%20.0f)
 
 ***********************************************************************************************
 *REVIEW QUESTIONS 4

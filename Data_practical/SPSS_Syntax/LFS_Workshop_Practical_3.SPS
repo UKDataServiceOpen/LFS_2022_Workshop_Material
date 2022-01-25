@@ -11,12 +11,19 @@ https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemplo
 
 
 *Set the directory, open the data and keep the necessary variables. 
-*cd "~\LFS workshop".
-*show DIRECTORY.
-*GET FILE = "UKDA-8778-spss\spss\spss25\lgwt18_2q_js20_od20_eul.sav". 
+*Edit as applicable depending on where you've saved your files
+ 
+cd "paste in the pathway to your folder with the data in".
+show DIRECTORY.
+GET FILE = "UKDA-8778-spss\spss\spss25\lgwt20_2q_js20_od20_eul.sav". 
 
 SAVE 
-  OUTFILE="practical3_temp".
+  OUTFILE='practical3temp.sav'
+/KEEP= ages2 age2 emplen1 emplen2 flow sex ilodefr1 ilodefr2 INCAC051 INCAC052 SC10MMJ1 SC10MMJ2 in792sm2 in792sm1 lgwt20.
+
+GET FILE = "practical3temp.sav". 
+
+*Close the original dataset if still open 
 
 *Examine the variables. 
 Frequencies ages2 age2 emplen1 emplen2 flow sex ilodefr1 ilodefr2 INCAC051 INCAC052 SC10MMJ1 SC10MMJ2 in792sm2 in792sm1.
@@ -130,6 +137,17 @@ CTABLES
   /TABLE eco1 [COUNT F40.0] BY eco2
   /CATEGORIES VARIABLES=eco2 eco1 ORDER=A KEY=VALUE EMPTY=INCLUDE MISSING=EXCLUDE.
 
+*************************************************************************************************
+Alternative for those without the CTables add on:
+
+CROSSTABS
+  /TABLES=eco1 BY eco2
+  /FORMAT=AVALUE TABLES
+  /CELLS=COUNT
+  /COUNT ROUND CELL.
+
+***************************************************************************************************
+
 ***********************************************************************************************
 *REVIEW QUESTIONS 4
 * What was the flow between 1) employee and self-employed and 2) self-employed to employee? 
@@ -139,4 +157,6 @@ CTABLES
 This is the final structured exercise. Some ideas for what to do next are:
 *Use the methods above to examine flows between industry or occupation (SC10MMJ1 SC10MMJ2 in792sm2 in792sm1). 
 * Open the full dataset to examine what variables in the  Two-Quarter Longitudinal Dataset.
-GET FILE = "lgwt18_2q_js20_od20_eul.sav".
+GET FILE = "lgwt20_2q_js20_od20_eul.sav".
+
+

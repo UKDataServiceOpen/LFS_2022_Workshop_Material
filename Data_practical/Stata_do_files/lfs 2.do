@@ -12,9 +12,9 @@ clear all
 
 // Set directory. - you need to add the correct file path for your computer, where is the data saved?.
 
-cd "P:Desktop\Data"
+cd "P:\desktop"
 use "UKDA-8777-stata\stata\stata13\lfsp_od20_eul_pwt20.dta"
-save "lfs_od20_practical2_temp"
+save "lfs_od20_practical2_temp", replace
 
 
 // Apply the weight
@@ -23,7 +23,7 @@ svyset [pw=PIWT20]
 // Create and apply a filter to select those with a weight greater than 0,				
 // those in fulltime employment ****with valid income values*****
 // Replace the three asterixs (*) with relevant values to complete the syntax below. 
-keep if PIWT20>0 & HOURPAY>=0 & HOURPAY<=100 & INECAC05==* & (FTPT==* | FTPT==*)
+keep if PIWT20>0 & HOURPAY>=0 & HOURPAY<=100 & INECAC05==1 & (FTPT==1 | FTPT==3)
 
 // Note - you can use the code below to check values and value labels for variables.
 codebook INECAC05 FTPT
@@ -38,7 +38,9 @@ codebook INECAC05 FTPT
 // set GRSSWK value -9 and -8 to stata missing value
 recode GRSSWK (-9 = .a) (-8 = .b)
 		
-table SEX[fw=PIWT20], c(mean GRSSWK median GRSSWK p10 GRSSWK p25 GRSSWK p75 GRSSWK) row col format (%9.1f)
+table SEX, statistic(mean GRSSWK)  statistic(median GRSSWK) ///
+			statistic(p10 GRSSWK) statistic(q1 GRSSWK) ///
+			statistic(q3 GRSSWK) statistic(p90 GRSSWK) nformat(%9.0fc) 
 
 	
 ***********************************************************************************************
@@ -47,8 +49,8 @@ table SEX[fw=PIWT20], c(mean GRSSWK median GRSSWK p10 GRSSWK p25 GRSSWK p75 GRSS
 *what are earnings at the lowest decile for males and females? 
 ***********************************************************************************************
 * Get a frequency table of sex to examine the gender breakdown of fulltime employees. 
-table SEX, row col
-table SEX[fw=PIWT20], row col format (%20.0f)
+table SEX
+table SEX[fw=PIWT20], nformat (%20.0f)
 ***********************************************************************************************
 *REVIEW QUESTIONS 4
 *The ONS table associated with this report gives the estimated number of fulltime employees as 21,215,000. 

@@ -96,10 +96,37 @@ CTABLES
   /CATEGORIES VARIABLES=JobTmp [6, 1, 2, 3, 4, 5, OTHERNM] EMPTY=INCLUDE TOTAL=YES POSITION=AFTER
   /CATEGORIES VARIABLES=PartTime ORDER=A KEY=VALUE EMPTY=INCLUDE
   /CATEGORIES VARIABLES=sex ORDER=A KEY=VALUE EMPTY=INCLUDE TOTAL=YES POSITION=AFTER MISSING=INCLUDE.
+
+****************************************************************
+Crosstab alternative for those without CTables add on
+
+For the first table: 
+
+CROSSTABS
+  /TABLES=SEX BY JobTmp
+  /FORMAT=AVALUE TABLES
+  /CELLS=COUNT
+  /COUNT ROUND CELL.
+
+select if (PartTime=1).
+execute.
+
+CROSSTABS
+  /TABLES=SEX BY JobTmp
+  /FORMAT=AVALUE TABLES
+  /CELLS=COUNT
+  /COUNT ROUND CELL.
+
+Filter OFF.
+
+*****************************************************************
+
+
 ***********************************************************************************************
 *REVIEW QUESTIONS  
 *How many applicable cases do we have for the above analysis?   
 ***********************************************************************************************
+
 
 
 
